@@ -5,8 +5,8 @@ from mongodb_migrations.cli import MigrationManager
 
 def init():
     parser = argparse.ArgumentParser(description="Custom MondoDB Migration parser")
-    parser.add_argument('--type',help="Process type: 'create' | 'run'")
-    parser.add_argument('--name',help="Name in migration title")
+    parser.add_argument('--type', help="Process type: 'create' | 'run'")
+    parser.add_argument('--name', help="Name in migration title")
 
     args = parser.parse_args()
 

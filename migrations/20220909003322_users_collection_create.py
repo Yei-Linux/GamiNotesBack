@@ -4,21 +4,21 @@ from mongodb_migrations.base import BaseMigration
 class Migration(BaseMigration):
     def upgrade(self):
         validator = {"$jsonSchema": {
-            "description": "Topic Collection for topics parent",
+            "description": "Users Collection",
             "type": "object",
             "properties": {
-                "title": {"type": "string"},
-                "description": {"type": "string"},
+                "email": {"type": "string"},
+                "username": {"type": "string"},
+                "names": {"type": "string"},
+                "firstname": {"type": "string"},
                 "created_at": {"type": "string"},
                 "updated_at": {"type": "string"},
                 "delete_at": {"type": "string"},
-
-                "user_id": {"type": "string"}
             },
-            "required": ["title", "user_id"],
+            "required": ["email", "username", "names", "firstname"],
             "dependencies": {}}}
 
-        self.db.create_collection("topics", validator=validator)
+        self.db.create_collection("users", validator=validator)
 
     def downgrade(self):
         pass
