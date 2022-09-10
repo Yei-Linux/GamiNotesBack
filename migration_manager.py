@@ -2,11 +2,17 @@ import argparse
 
 from mongodb_migrations.cli import MigrationManager
 
+"""
+Migrations Manager, to execute scripts run:
+    * create migration: py migration_manager.py --type create --name file_name
+    * run migration :   py migration_manager.py --type run
+"""
+
 
 def init():
     parser = argparse.ArgumentParser(description="Custom MondoDB Migration parser")
-    parser.add_argument('--type', help="Process type: 'create' | 'run'")
-    parser.add_argument('--name', help="Name in migration title")
+    parser.add_argument('--type',help="Process type: 'create' | 'run'")
+    parser.add_argument('--name',help="Name in migration title")
 
     args = parser.parse_args()
 
