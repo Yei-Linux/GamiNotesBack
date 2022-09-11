@@ -6,6 +6,7 @@ from api.resources.note.NoteListResource import NoteListResource
 from api.resources.note.NoteResource import NoteResource
 from api.resources.topic.TopicResource import TopicResource
 from api.resources.topic.TopicListResource import TopicListResource
+from api.resources.topic.TopicWithNotesResource import TopicWithNotesResource
 from api.resources.user.UserListResource import UserListResource
 from api.resources.user.UserResource import UserResource
 from config.extensions import mongo
@@ -21,6 +22,7 @@ app.config["SWAGGER"] = {
 swagger = Swagger(app)
 mongo.init_app(app)
 
+api.add_resource(TopicWithNotesResource, "/topics/<topic_id>/notes")
 api.add_resource(TopicResource, "/topics/<topic_id>")
 api.add_resource(TopicListResource, "/topics")
 

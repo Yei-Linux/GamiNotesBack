@@ -1,3 +1,4 @@
+from bson import ObjectId
 from mongodb_migrations.base import BaseMigration
 
 
@@ -14,7 +15,7 @@ class Migration(BaseMigration):
                 "updated_at": {"type": "string"},
                 "delete_at": {"type": "string"},
 
-                "topic_id": {"type": "string"},
+                "topic_id": {"bsonType": "objectId"},
 
                 "is_memorized": {"type": "boolean"},
                 "is_ignored": {"type": "boolean"}

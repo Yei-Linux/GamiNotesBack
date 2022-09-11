@@ -10,7 +10,7 @@ from api.services.TopicService import TopicServiceImpl
 
 
 class TopicListResource(Resource):
-    base_single_resource = BaseAllResource("topics", TopicServiceImpl)
+    base_all_resource = BaseAllResource("topics", TopicServiceImpl)
 
     @swag_from({
         'responses': {
@@ -21,7 +21,7 @@ class TopicListResource(Resource):
         }
     })
     def get(self):
-        return self.base_single_resource.get()
+        return self.base_all_resource.get()
 
     @swag_from({
         'responses': {
@@ -32,4 +32,4 @@ class TopicListResource(Resource):
         }
     })
     def post(self):
-        return self.base_single_resource.post(request.get_json())
+        return self.base_all_resource.post(request.get_json())

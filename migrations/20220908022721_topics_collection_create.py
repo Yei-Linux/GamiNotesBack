@@ -1,3 +1,4 @@
+from bson import ObjectId
 from mongodb_migrations.base import BaseMigration
 
 
@@ -13,7 +14,7 @@ class Migration(BaseMigration):
                 "updated_at": {"type": "string"},
                 "delete_at": {"type": "string"},
 
-                "user_id": {"type": "string"}
+                "user_id": {"bsonType": "objectId"}
             },
             "required": ["title", "user_id"],
             "dependencies": {}}}
