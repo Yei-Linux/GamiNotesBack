@@ -14,7 +14,10 @@ class Migration(BaseMigration):
                 "updated_at": {"type": "string"},
                 "delete_at": {"type": "string"},
 
-                "topic_id": {"type": "string"}
+                "topic_id": {"type": "string"},
+
+                "is_memorized": {"type": "boolean"},
+                "is_ignored": {"type": "boolean"}
             },
             "required": ["title", "description", "topic_id"],
             "dependencies": {}}}

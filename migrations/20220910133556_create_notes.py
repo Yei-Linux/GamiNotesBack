@@ -9,21 +9,27 @@ class Migration(BaseMigration):
                 "title": "Julio Cesar",
                 "description": "Julio Cesar and Cleopatra worked together and then they had a son",
                 "is_liked": False,
-                "topic_id": "631cdb1b250a87dd50fb5080"
+                "topic_id": "631cdb1b250a87dd50fb5080",
+
+                "is_memorized": True
             },
             {
                 "_id": "631cdc817bf8d43c89e80d11",
                 "title": "Synesthesia",
                 "description": "Faculty not common whose some people experiments strange sensations",
                 "is_liked": True,
-                "topic_id": "631cdb1b250a87dd50fb5081"
+                "topic_id": "631cdb1b250a87dd50fb5081",
+
+                "is_memorized": False
             },
             {
                 "_id": "631cdc817bf8d43c89e80d12",
                 "title": "Hash Map",
                 "description": "Data structure that offers a good tradeoff between time and space costs",
                 "is_liked": True,
-                "topic_id": "631cdb1b250a87dd50fb5082"
+                "topic_id": "631cdb1b250a87dd50fb5082",
+
+                "is_memorized": False
             },
         ])
 
