@@ -4,6 +4,7 @@ from flasgger import swag_from
 from flask import request
 from flask_restful import Resource
 
+from api.pojos.requests.TopicUpdate import TopicUpdate
 from api.resources.base.BaseSingleResource import BaseSingleResource
 from api.schemas.ResponseSchema import ResponseSchema
 from api.services.TopicService import TopicServiceImpl
@@ -32,7 +33,10 @@ class TopicResource(Resource):
         }
     })
     def put(self, topic_id):
-        return self.base_single_resource.put(topic_id, request.get_json())
+        body = request.get_json(force=True)
+        body_parse = TopicUpdate(body["title"], body["description"])
+
+        return self.base_single_resource.put(topic_id, vars(body_parse))
 
     @swag_from({
         'responses': {

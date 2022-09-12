@@ -4,6 +4,7 @@ from flasgger import swag_from
 from flask import request
 from flask_restful import Resource
 
+from api.pojos.requests.NoteCreate import NoteCreate
 from api.resources.base.BaseAllResource import BaseAllResource
 from api.schemas.ResponseSchema import ResponseSchema
 from api.services.NoteService import NoteServiceImpl
@@ -32,4 +33,7 @@ class NoteListResource(Resource):
         }
     })
     def post(self):
-        return self.base_single_resource.post(request.get_json())
+        title, description, is_liked, topic_id, is_memorized, is_ignored = request.get_json(force=True).values()
+        body_parse = NoteCreate(title, description, is_liked, topic_id, is_memorized, is_ignored)
+
+        return self.base_single_resource.post(vars(body_parse))

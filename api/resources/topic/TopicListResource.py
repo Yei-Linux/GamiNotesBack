@@ -1,9 +1,11 @@
+import json
 from http import HTTPStatus
 
 from flasgger import swag_from
 from flask import request
 from flask_restful import Resource
 
+from api.pojos.requests.TopicCreate import TopicCreate
 from api.resources.base.BaseAllResource import BaseAllResource
 from api.schemas.ResponseSchema import ResponseSchema
 from api.services.TopicService import TopicServiceImpl
@@ -32,4 +34,7 @@ class TopicListResource(Resource):
         }
     })
     def post(self):
-        return self.base_all_resource.post(request.get_json())
+        body = request.get_json(force=True)
+        body_parse = TopicCreate(body["title"], body["description"], body["user_id"])
+
+        return self.base_all_resource.post(vars(body_parse))
