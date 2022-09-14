@@ -10,9 +10,13 @@ from api.resources.topic.TopicWithNotesResource import TopicWithNotesResource
 from api.resources.user.UserListResource import UserListResource
 from api.resources.user.UserResource import UserResource
 from config.extensions import mongo
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+
 api = Api(app, prefix="/gami-notes/api/v1")
+
 
 app.config["MONGO_URI"] = "mongodb://jesus:123@127.0.0.1:27017/gami_notes?authSource=admin"
 app.config["SWAGGER"] = {

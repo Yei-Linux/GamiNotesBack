@@ -1,4 +1,5 @@
 import json
+from typing import Any
 
 from bson import json_util,ObjectId
 
@@ -9,6 +10,12 @@ from config.extensions import mongo
 class TopicService(CrudService):
     def __init__(self,collection_name):
         super().__init__(collection_name)
+
+    def __build(self, document: Any, ids: list[str]):
+        for field in ids:
+            document[field] = str(document[field]["$oid"])
+
+        return document
 
     def find_all(self):
         try:
@@ -102,7 +109,7 @@ class TopicService(CrudService):
                 ])
 
             list_responses = list(responses)
-            json_list_responses = list(map(lambda document: json.loads(json_util.dumps(document)),list_responses))
+            json_list_responses = list(map(lambda document: json.loads(json.dumps(document, default=lambda o: str(o))), list_responses))
 
             return json_list_responses
         except Exception as e:
@@ -200,7 +207,7 @@ class TopicService(CrudService):
             if len(list_responses) == 0:
                 return []
 
-            json_list_responses = list(map(lambda document: json.loads(json_util.dumps(document)), list_responses))
+            json_list_responses = list(map(lambda document: json.loads(json.dumps(document, default=lambda o: str(o))), list_responses))
 
             return json_list_responses[0]
         except Exception as e:

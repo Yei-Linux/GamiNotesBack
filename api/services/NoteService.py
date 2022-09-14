@@ -43,7 +43,7 @@ class NoteService(CrudService):
             )
 
             list_responses = list(responses)
-            json_list_responses = list(map(lambda document: json.loads(json_util.dumps(document)), list_responses))
+            json_list_responses = list(map(lambda document: json.loads(json.dumps(document, default=lambda o: str(o))), list_responses))
 
             return json_list_responses
         except Exception as e:

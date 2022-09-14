@@ -16,7 +16,7 @@ class CrudService:
         try:
             responses = mongo.db[self._collection_name].find({})
             list_responses = list(responses)
-            json_list_responses = list(map(lambda document: json.loads(json_util.dumps(document)), list_responses))
+            json_list_responses = list(map(lambda document: json.loads(json.dumps(document, default=lambda o: str(o))), list_responses))
 
             return json_list_responses
         except Exception as e:
@@ -25,7 +25,7 @@ class CrudService:
     def find_by_id(self, id_param: str):
         try:
             response = mongo.db[self._collection_name].find_one({"_id": ObjectId(id_param)})
-            json_document = json.loads(json_util.dumps(response))
+            json_document = json.loads(json.dumps(response, default=lambda o: str(o)))
             return json_document
         except Exception as e:
             raise Exception("Error in find by id", e)
@@ -33,7 +33,7 @@ class CrudService:
     def create(self, document: Dict):
         try:
             mongo.db[self._collection_name].insert_one(document)
-            json_document = json.loads(json_util.dumps(document))
+            json_document = json.loads(json.dumps(document, default=lambda o: str(o)))
 
             return json_document
         except Exception as e:
@@ -42,7 +42,7 @@ class CrudService:
     def update_by_id(self, id_param: str, document: Dict):
         try:
             mongo.db[self._collection_name].update_one({"_id": ObjectId(id_param)} , {"$set": document})
-            json_document = json.loads(json_util.dumps(document))
+            json_document = json.loads(json.dumps(document, default=lambda o: str(o)))
             return json_document
         except Exception as e:
             raise Exception("Error in updating document", e)
