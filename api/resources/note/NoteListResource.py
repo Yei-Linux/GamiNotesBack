@@ -11,7 +11,7 @@ from api.services.NoteService import NoteServiceImpl
 
 
 class NoteListResource(Resource):
-    base_single_resource = BaseAllResource("notes", NoteServiceImpl)
+    base_single_resource = BaseAllResource("notes",NoteServiceImpl)
 
     @swag_from({
         'responses': {
@@ -33,7 +33,9 @@ class NoteListResource(Resource):
         }
     })
     def post(self):
-        title, description, is_liked, topic_id, is_memorized, is_ignored = request.get_json(force=True).values()
-        body_parse = NoteCreate(title, description, is_liked, topic_id, is_memorized, is_ignored)
+        body = request.get_json(force=True)
+        body_parse = NoteCreate(title=body["title"],description=body["description"],is_liked=body["is_liked"],
+                                topic_id=body["topic_id"],is_memorized=body["is_memorized"],
+                                is_ignored=body["is_ignored"])
 
         return self.base_single_resource.post(vars(body_parse))
