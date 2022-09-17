@@ -14,6 +14,8 @@ class CrudService:
 
     def find_all(self):
         try:
+            print("test")
+            print(mongo.db[self._collection_name])
             responses = mongo.db[self._collection_name].find({})
             list_responses = list(responses)
             json_list_responses = list(map(lambda document: json.loads(json.dumps(document, default=lambda o: str(o))), list_responses))

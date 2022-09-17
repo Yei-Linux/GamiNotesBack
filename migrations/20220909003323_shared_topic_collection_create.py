@@ -22,10 +22,10 @@ class Migration(BaseMigration):
                 "user_limit": {"type": "number"},
                 "create_at": {"bsonType": "date"},
             },
-            "required": ["topic_title","username","notes","expiration_date"],
+            "required": ["topic_title", "username", "notes", "create_at"],
             "dependencies": {}}}
 
-        self.db.create_collection("shared_topics",validator=validator)
+        self.db.create_collection("shared_topics", validator=validator)
 
     def downgrade(self):
         pass

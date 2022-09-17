@@ -11,12 +11,6 @@ class TopicService(CrudService):
     def __init__(self,collection_name):
         super().__init__(collection_name)
 
-    def __build(self, document: Any, ids: list[str]):
-        for field in ids:
-            document[field] = str(document[field]["$oid"])
-
-        return document
-
     def find_all(self):
         try:
             responses = mongo.db["topics"].aggregate(
