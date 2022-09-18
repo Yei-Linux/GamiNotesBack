@@ -15,13 +15,13 @@ from api.services.UserService import UserService
 from config.server_config import server_config
 
 
-class SharedTopicResource(Resource):
+class PublicSharedTopicResource(Resource):
     shared_topic_service = SharedTopicService(collection_name="shared_topics")
 
     @swag_from({
         'responses': {
             HTTPStatus.OK.value: {
-                'description': 'Get shared topic',
+                'description': 'Get public shared topic by shared topic id',
                 'schema': ResponseSchema
             }
         }

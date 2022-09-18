@@ -21,8 +21,9 @@ class Migration(BaseMigration):
 
                 "user_limit": {"type": "number"},
                 "create_at": {"bsonType": "date"},
+                "topic_id": {"bsonType": "objectId"},
             },
-            "required": ["topic_title", "username", "notes", "create_at"],
+            "required": ["topic_title", "username", "notes", "create_at", "topic_id"],
             "dependencies": {}}}
 
         self.db.create_collection("shared_topics", validator=validator)

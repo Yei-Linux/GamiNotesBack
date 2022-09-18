@@ -2,8 +2,9 @@ from flasgger import Swagger
 from flask import Flask
 from flask_restful import Api
 
-from api.resources.SharedTopic.SharedTopicListResource import SharedTopicListResource
-from api.resources.SharedTopic.SharedTopicResource import SharedTopicResource
+from api.resources.public_shared_topic.PublicSharedTopicResource import PublicSharedTopicResource
+from api.resources.shared_topic.SharedTopicListResource import SharedTopicListResource
+from api.resources.shared_topic.SharedTopicResource import SharedTopicResource
 from api.resources.note.NoteListResource import NoteListResource
 from api.resources.note.NoteResource import NoteResource
 from api.resources.topic.TopicResource import TopicResource
@@ -44,7 +45,9 @@ api.add_resource(NoteResource,"/notes/<note_id>")
 api.add_resource(NoteListResource,"/notes")
 
 api.add_resource(SharedTopicListResource,"/shared/topics")
-api.add_resource(SharedTopicResource,"/shared/topics/<shared_topic_id>")
+api.add_resource(SharedTopicResource,"/shared/topics/<topic_id>")
+
+api.add_resource(PublicSharedTopicResource,"/public/topics/shared/<shared_topic_id>")
 
 if __name__ == '__main__':
     app.run()
