@@ -31,8 +31,12 @@ class SharedTopicResource(Resource):
             now = DateHelper().now().date
             date_created = DateHelper(date=shared_topic["create_at"]).add(seconds=server_config["expiration_time_ttl"]).tz().diff(now)
 
+            shared_topic["create_at"] = DateHelper(date=shared_topic["create_at"]).tz().str()
+
             if date_created["invalid"] is True:
-                raise Exception("Shared topic has just expired.")
+                response = Response(data={**shared_topic, "warning": "Shared topic it will expired soon!."},
+                                    message="Got data successful, remember that this shared topic created will expire be expired")
+                return ResponseSchema().dump(response),200
 
             field_dict = None
 

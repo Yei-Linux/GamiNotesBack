@@ -11,6 +11,9 @@ class DateHelper:
         if date != "":
             self.date = datetime.fromisoformat(date)
 
+    def str(self):
+        return self.date.strftime("%Y-%m-%d %H:%M:%S")
+
     def tz(self,timezone="America/Lima"):
         time_zone = pytz.timezone(timezone)
         self.date = self.date.replace(tzinfo=pytz.utc).astimezone(time_zone)
