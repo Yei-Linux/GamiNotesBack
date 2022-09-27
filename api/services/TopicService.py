@@ -1,7 +1,8 @@
 import json
-from typing import Any
+import re
 
-from bson import json_util,ObjectId
+import pymongo
+from bson import ObjectId
 
 from api.services.crud import CrudService
 from config.extensions import mongo
@@ -11,10 +12,32 @@ class TopicService(CrudService):
     def __init__(self,collection_name):
         super().__init__(collection_name)
 
-    def find_all(self):
+    def find_all_v1(self, filters_pagination):
+        skip = int(filters_pagination["size"]) * int(filters_pagination["page"])
+        regx = re.compile(filters_pagination["search"], re.IGNORECASE)
         try:
+            mongo.db["topics"].create_index([("title", pymongo.TEXT)])
+
             responses = mongo.db["topics"].aggregate(
                 [
+                    {
+                        "$addFields": {
+                            "is_match": {
+                                "$regexMatch": {
+                                    "input": "$title",
+                                    "regex": regx,
+                                },
+                            }
+                        }
+                    },
+                    {
+                        "$match": {
+                            "is_match": True
+                        }
+                    },
+                    {
+                        "$skip": skip
+                    },
                     {
                         "$lookup": {
                             "from": "notes",
