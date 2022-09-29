@@ -132,13 +132,18 @@ class TopicService(CrudService):
         except Exception as e:
             raise Exception("Error in find all: ", e)
 
-    def find_topic_with_notes_info(self, topic_id):
+    def find_topic_with_notes_info(self, topic_id, filters_pagination):
         try:
+            skip = int(filters_pagination["size"]) * int(filters_pagination["page"])
+            regx = re.compile(filters_pagination["search"], re.IGNORECASE)
             responses = mongo.db["topics"].aggregate([
                 {
                     "$match": {
                         "_id": ObjectId(topic_id)
                     }
+                },
+                {
+                    "$skip": skip
                 },
                 {
                     "$lookup": {
@@ -150,6 +155,21 @@ class TopicService(CrudService):
                                     "$expr": {
                                         "$eq": ["$topic_id","$$id"]
                                     }
+                                }
+                            },
+                            {
+                                "$addFields": {
+                                    "is_match": {
+                                        "$regexMatch": {
+                                            "input": "$title",
+                                            "regex": regx
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "$match": {
+                                    "is_match": True
                                 }
                             },
                             {
@@ -222,7 +242,7 @@ class TopicService(CrudService):
 
             list_responses = list(responses)
             if len(list_responses) == 0:
-                return []
+                raise Exception("Error matching results")
 
             json_list_responses = list(map(lambda document: json.loads(json.dumps(document, default=lambda o: str(o))), list_responses))
 

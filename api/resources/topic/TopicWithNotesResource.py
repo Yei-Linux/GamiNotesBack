@@ -24,10 +24,12 @@ class TopicWithNotesResource(Resource):
             }
         }
     })
-    def post(self, topic_id):
+    def get(self, topic_id):
+        params = request.args.to_dict()
+
         try:
-            topic_with_notes_info = self.topic_service_impl.find_topic_with_notes_info(topic_id)
-            notes_by_topic_id = self.notes_service_impl.find_all_by_topic_id(topic_id, request.get_json())
+            topic_with_notes_info = self.topic_service_impl.find_topic_with_notes_info(topic_id, params)
+            notes_by_topic_id = self.notes_service_impl.find_all_by_topic_id(topic_id, params)
 
             topic_with_notes_response = TopicWithNotes(total_notes=topic_with_notes_info["notes"], total_memorized=topic_with_notes_info["notes_memorized"], notes=notes_by_topic_id)
             topic_with_notes_response_serializable_str = json.dumps(topic_with_notes_response, default=vars)

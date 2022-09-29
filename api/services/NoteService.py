@@ -1,8 +1,8 @@
 import json
+import re
 
 from bson import json_util,ObjectId
 
-from api.pojos.Filters import Filters
 from api.services.crud import CrudService
 from config.extensions import mongo
 
@@ -11,15 +11,31 @@ class NoteService(CrudService):
     def __init__(self, collection_name):
         super().__init__(collection_name)
 
-    def find_all_by_topic_id(self, topic_id: str, filters: Filters):
+    def find_all_by_topic_id(self, topic_id: str, filters_pagination):
         try:
-            skip = filters["size"] * filters["page"]
+            skip = int(filters_pagination["size"]) * int(filters_pagination["page"])
+            regx = re.compile(filters_pagination["search"], re.IGNORECASE)
 
             responses = mongo.db["notes"].aggregate(
                 [
                     {
                         "$match": {
-                            "topic_id": ObjectId(topic_id)
+                            "topic_id": ObjectId(topic_id),
+                        }
+                    },
+                    {
+                        "$addFields": {
+                            "is_match": {
+                                "$regexMatch": {
+                                    "input": "$title",
+                                    "regex": regx,
+                                },
+                            }
+                        }
+                    },
+                    {
+                        "$match": {
+                            "is_match": True
                         }
                     },
                     {
