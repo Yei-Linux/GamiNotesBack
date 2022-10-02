@@ -119,6 +119,8 @@ class TopicService(CrudService):
                             "title": 1,
                             "description": 1,
                             "user_id": 1,
+                            "is_liked": 1,
+                            "is_ignored": 1,
                             "notes": {"$ifNull": ["$notes_counter.count",0]},
                             "notes_memorized": {"$ifNull": ["$notes_memorized_counter.count",0]}
                         }

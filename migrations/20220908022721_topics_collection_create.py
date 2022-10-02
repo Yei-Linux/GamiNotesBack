@@ -10,11 +10,14 @@ class Migration(BaseMigration):
             "properties": {
                 "title": {"type": "string"},
                 "description": {"type": "string"},
+                "is_liked": {"type": "boolean"},
                 "created_at": {"type": "string"},
                 "updated_at": {"type": "string"},
                 "delete_at": {"type": "string"},
 
-                "user_id": {"bsonType": "objectId"}
+                "user_id": {"bsonType": "objectId"},
+
+                "is_ignored": {"type": "boolean"}
             },
             "required": ["title", "user_id"],
             "dependencies": {}}}

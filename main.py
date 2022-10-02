@@ -34,15 +34,15 @@ mongo.init_app(app)
 with app.app_context():
     app.session_interface = MongoDBSessionInterface(app=app,db=mongo.db,collection_name="sessions")
 
-api.add_resource(TopicWithNotesResource,"/topics/<topic_id>/notes")
-api.add_resource(TopicResource,"/topics/<topic_id>")
 api.add_resource(TopicListResource,"/topics")
+api.add_resource(TopicResource,"/topics/<topic_id>")
+api.add_resource(TopicWithNotesResource,"/topics/<topic_id>/notes")
 
-api.add_resource(UserResource,"/users/<user_id>")
 api.add_resource(UserListResource,"/users")
+api.add_resource(UserResource,"/users/<user_id>")
 
-api.add_resource(NoteResource,"/notes/<note_id>")
 api.add_resource(NoteListResource,"/notes")
+api.add_resource(NoteResource,"/notes/<note_id>")
 
 api.add_resource(SharedTopicListResource,"/shared/topics")
 api.add_resource(SharedTopicResource,"/shared/topics/<topic_id>")
