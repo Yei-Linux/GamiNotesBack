@@ -34,9 +34,8 @@ class TopicResource(Resource):
     })
     def put(self, topic_id):
         body = request.get_json(force=True)
-        body_parse = TopicUpdate(body["title"], body["description"])
 
-        return self.base_single_resource.put(topic_id, vars(body_parse))
+        return self.base_single_resource.put(topic_id, body)
 
     @swag_from({
         'responses': {

@@ -34,9 +34,8 @@ class NoteResource(Resource):
     })
     def put(self, note_id):
         request_body = request.get_json(force=True)
-        body_parse = NoteUpdate(request_body["title"], request_body["description"], request_body["is_liked"], request_body["is_memorized"], request_body["is_ignored"])
 
-        return self.base_single_resource.put(note_id, vars(body_parse))
+        return self.base_single_resource.put(note_id, request_body)
 
     @swag_from({
         'responses': {

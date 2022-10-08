@@ -23,7 +23,8 @@ CORS(app)
 
 api = Api(app,prefix="/gami-notes/api/v1")
 
-app.config["MONGO_URI"] = "mongodb://jesus:123@127.0.0.1:27017/gami_notes?authSource=admin&replicaSet=%s"%server_config["replica_set_mongo"]
+app.config["MONGO_URI"] = "mongodb://jesus:123@127.0.0.1:27017/gami_notes?authSource=admin&replicaSet=%s" % \
+                          server_config["replica_set_mongo"]
 app.config["SWAGGER"] = {
     'title': 'Flask API Starter Kit'
 }
