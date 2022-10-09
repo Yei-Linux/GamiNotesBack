@@ -21,6 +21,8 @@ class NoteService(CrudService):
                     {
                         "$match": {
                             "topic_id": ObjectId(topic_id),
+                            "is_ignored": False,
+                            "deleted_at": None
                         }
                     },
                     {

@@ -4,6 +4,7 @@ from flasgger import swag_from
 from flask import request
 from flask_restful import Resource
 
+from api.helpers.date import DateHelper
 from api.pojos.requests.TopicUpdate import TopicUpdate
 from api.resources.base.BaseSingleResource import BaseSingleResource
 from api.schemas.ResponseSchema import ResponseSchema
@@ -46,4 +47,9 @@ class TopicResource(Resource):
         }
     })
     def delete(self, topic_id):
-        return self.base_single_resource.delete(topic_id)
+        now = DateHelper().now().date
+        body = {
+            "deleted_at": now
+        }
+
+        return self.base_single_resource.put(topic_id, body)

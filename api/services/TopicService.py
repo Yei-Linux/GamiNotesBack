@@ -32,7 +32,9 @@ class TopicService(CrudService):
                     },
                     {
                         "$match": {
-                            "is_match": True
+                            "is_match": True,
+                            "is_ignored": False,
+                            "deleted_at": None
                         }
                     },
                     {
@@ -141,7 +143,9 @@ class TopicService(CrudService):
             responses = mongo.db["topics"].aggregate([
                 {
                     "$match": {
-                        "_id": ObjectId(topic_id)
+                        "_id": ObjectId(topic_id),
+                        "is_ignored": False,
+                        "deleted_at": None
                     }
                 },
                 {
